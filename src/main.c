@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 18:55:28 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/28 20:36:38 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,39 @@ static void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->map = NULL;
-	data->texture = NULL;
+	data->texture = ft_malloc(sizeof(t_texture));
+	data->texture->north = NULL;
+	data->texture->south = NULL;
+	data->texture->west = NULL;
+	data->texture->east = NULL;
+}
+
+void	check_element(t_data *data, char **arr)
+{
+	if (!ft_strncmp(arr[0], "NO", 2))
+	{
+		if (data->texture->north)
+			(ft_malloc(-1337), printf("Error\nMultiple definitions of north texture\n"), exit(1));
+		data->texture->north = ft_malloc(sizeof(char *));
+	}
+	else if (!ft_strncmp(arr[0], "SO", 2))
+	{
+		if (data->texture->south)
+			(ft_malloc(-1337), printf("Error\nMultiple definitions of south texture\n"), exit(1));
+		data->texture->south = ft_malloc(sizeof(char *));
+	}
+	else if (!ft_strncmp(arr[0], "WE", 2))
+	{
+		if (data->texture->west)
+			(ft_malloc(-1337), printf("Error\nMultiple definitions of west texture\n"), exit(1));
+		data->texture->west = ft_malloc(sizeof(char *));
+	}
+	else if (!ft_strncmp(arr[0], "EA", 2))
+	{
+		if (data->texture->east)
+			(ft_malloc(-1337), printf("Error\nMultiple definitions of east texture\n"), exit(1));
+		data->texture->east = ft_malloc(sizeof(char *));
+	}
 }
 
 static int	parse_file(t_data *data, char *file)
@@ -51,7 +83,7 @@ static int	parse_file(t_data *data, char *file)
 			line = get_next_line(fd);
 			continue ;
 		}
-		// check_element(data, arr_line);
+		check_element(data, arr_line);
 		line = get_next_line(fd);
 	}
 	return (1);
@@ -64,6 +96,25 @@ int	clean_exit(t_data *data)
 	free(data->mlx);
 	ft_malloc(-1337);
 	exit(0);
+}
+
+int key_hooks(int key, t_data *data)
+{
+	if (key == KEY_ESC)
+		clean_exit(data);
+	if (key == KEY_RIGHT)
+		printf("right arrow\n");
+	if (key == KEY_LEFT)
+		printf("left arrow\n");
+	if (key == KEY_W)
+		printf("w key\n");
+	if (key == KEY_A)
+		printf("a key\n");
+	if (key == KEY_S)
+		printf("s key\n");
+	if (key == KEY_D)
+		printf("d key\n");
+	return(0);
 }
 
 int	main(int ac, char **av)
@@ -79,6 +130,7 @@ int	main(int ac, char **av)
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
 	mlx_hook(data->win, 17, 1L<<0, clean_exit, data);
+	mlx_hook(data->win, 2, 1L<<0, key_hooks, data);
 	mlx_loop(data->mlx);
 	return (0);	
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 18:44:08 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/28 20:35:51 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@
 # define KEY_A 97
 # define KEY_S 115
 # define KEY_D 100
+# define KEY_ESC 65307
+# define KEY_LEFT 65361
+# define KEY_RIGHT 65363
 
 typedef struct s_mem
 {
@@ -32,10 +35,10 @@ typedef struct s_mem
 
 typedef struct s_texture
 {
-	void			*north;
-	void			*south;
-	void			*west;
-	void			*east;
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
 	unsigned char	floor[3];
 	unsigned char	ceiling[3];
 }					t_texture;
@@ -54,6 +57,8 @@ typedef struct s_data
 }					t_data;
 
 int		ft_strcmp(const char *s1, const char *s2);
+int		ft_strncmp(const char *s1, const char *s2, size_t n);
+int		ft_isspace(int c);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);

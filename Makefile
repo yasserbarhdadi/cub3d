@@ -3,8 +3,12 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 MLX = -L/home/$(USER)/Documents/mlx -lmlx -lXext -lX11
 
-UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c get_next_line.c ft_strlen.c ft_strlcat.c ft_strlcpy.c ft_split.c)
-SRC = $(addprefix src/, main.c ) $(UTILS)
+UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c \
+		get_next_line.c ft_strlen.c ft_strlcat.c ft_strlcpy.c ft_split.c ft_isspace.c \
+		ft_strncmp.c)
+
+SRC = src/main.c $(UTILS)
+
 OBJ = $(SRC:%.c=%.o)
 
 all: $(NAME)
