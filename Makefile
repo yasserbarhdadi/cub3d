@@ -5,9 +5,11 @@ MLX = -L/home/$(USER)/Documents/mlx -lmlx -lXext -lX11
 
 UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c \
 		get_next_line.c ft_strlen.c ft_strlcat.c ft_strlcpy.c ft_split.c ft_isspace.c \
-		ft_strncmp.c)
+		ft_strncmp.c ft_atoi.c ft_perror.c)
 
-SRC = src/main.c $(UTILS)
+PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c)
+
+SRC = src/main.c $(UTILS) $(PARSE)
 
 OBJ = $(SRC:%.c=%.o)
 

@@ -1,32 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/24 16:49:45 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/30 15:04:09 by yabarhda         ###   ########.fr       */
+/*   Created: 2024/10/23 21:30:31 by yabarhda          #+#    #+#             */
+/*   Updated: 2025/08/29 14:34:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/main.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+long	ft_atoi(const char *str)
 {
-	size_t	i;
+	long	sign;
+	long	result;
 
-	i = 0;
-	if (!s1 || !s2 || !n)
-		return (0);
-	while (s1[i] || s2[i])
+	sign = 1;
+	result = 0;
+	while ((*str >= 9 && *str <= 13) || *str == 32)
+		str++;
+	if (*str == '-' || *str == '+')
 	{
-		if (i < n)
-		{
-			if (s1[i] != s2[i])
-				break ;
-		}
-		i++;
+		if (*str == '-')
+			sign = -1;
+		str++;
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	while (*str >= '0' && *str <= '9')
+	{
+		result = (result * 10) + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

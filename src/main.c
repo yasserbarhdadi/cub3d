@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/29 15:16:30 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:36:14 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	error_check(int ac, char **av)
 {
-	int		fd;
-	int		len;
+	int	fd;
+	int	len;
 
 	if (ac != 2)
 		return (printf("Error\nNot enough arguments\n"), 0);
@@ -37,56 +37,8 @@ static void	init_data(t_data *data)
 	data->texture->south = NULL;
 	data->texture->west = NULL;
 	data->texture->east = NULL;
-}
-
-void	check_element(t_data *data, char **arr)
-{
-	if (!ft_strncmp(arr[0], "NO", 2))
-	{
-		if (data->texture->north)
-			(ft_malloc(-1337), printf("Error\nMultiple definitions of north texture\n"), exit(1));
-		data->texture->north = ft_malloc(sizeof(char *));
-	}
-	else if (!ft_strncmp(arr[0], "SO", 2))
-	{
-		if (data->texture->south)
-			(ft_malloc(-1337), printf("Error\nMultiple definitions of south texture\n"), exit(1));
-		data->texture->south = ft_malloc(sizeof(char *));
-	}
-	else if (!ft_strncmp(arr[0], "WE", 2))
-	{
-		if (data->texture->west)
-			(ft_malloc(-1337), printf("Error\nMultiple definitions of west texture\n"), exit(1));
-		data->texture->west = ft_malloc(sizeof(char *));
-	}
-	else if (!ft_strncmp(arr[0], "EA", 2))
-	{
-		if (data->texture->east)
-			(ft_malloc(-1337), printf("Error\nMultiple definitions of east texture\n"), exit(1));
-		data->texture->east = ft_malloc(sizeof(char *));
-	}
-}
-
-static int	parse_file(t_data *data, char *file)
-{
-	int		fd;
-	char	*line;
-	(void)data;
-
-	fd = open(file, O_RDONLY);
-	line = get_next_line(fd);
-	while (line)
-	{
-		char **arr_line = ft_split(line, ' ');
-		if (arr_line[0][0] == '\n')
-		{
-			line = get_next_line(fd);
-			continue ;
-		}
-		check_element(data, arr_line);
-		line = get_next_line(fd);
-	}
-	return (1);
+	data->texture->floor = NULL;
+	data->texture->ceiling = NULL;
 }
 
 int	clean_exit(t_data *data)
@@ -98,7 +50,7 @@ int	clean_exit(t_data *data)
 	exit(0);
 }
 
-int key_hooks(int key, t_data *data)
+int	key_hooks(int key, t_data *data)
 {
 	if (key == KEY_ESC)
 		clean_exit(data);
@@ -114,7 +66,7 @@ int key_hooks(int key, t_data *data)
 		printf("s key\n");
 	if (key == KEY_D)
 		printf("d key\n");
-	return(0);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -129,8 +81,8 @@ int	main(int ac, char **av)
 		return (ft_malloc(-1337), 1);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
-	mlx_hook(data->win, 17, 1L<<0, clean_exit, data);
-	mlx_hook(data->win, 2, 1L<<0, key_hooks, data);
+	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
+	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

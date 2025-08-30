@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/29 14:48:29 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:37:54 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ typedef struct s_texture
 	char			*south;
 	char			*west;
 	char			*east;
-	unsigned char	floor[3];
-	unsigned char	ceiling[3];
+	unsigned char	*floor;
+	unsigned char	*ceiling;
 }					t_texture;
 
 typedef struct s_map
 {
-	// something
 }					t_map;
 
 typedef struct s_data
@@ -68,6 +67,9 @@ typedef struct s_data
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_isspace(int c);
+int		parse_file(t_data *data, char *file);
+
+long	ft_atoi(const char *str);
 
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);
@@ -75,6 +77,10 @@ char	*get_next_line(int fd);
 char	**ft_split(char const *s, char c);
 
 void	*ft_malloc(long size);
+void	map_check(t_data *data);
+void	ft_perror(char *s);
+void	check_element(t_data *data, char **arr);
+void	map_check(t_data *data);
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);
