@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 20:35:51 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/29 14:48:29 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-# include "/home/yabarhda/Documents/mlx/mlx.h"
+// # include "/home/yabarhda/Documents/mlx/mlx.h"
+# include "/home/jait-chd/Documents/mlx/mlx.h"
 
 # define KEY_W 119
 # define KEY_A 97
@@ -26,6 +27,8 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
+
+
 
 typedef struct s_mem
 {
@@ -55,6 +58,12 @@ typedef struct s_data
 	t_map			*map;
 	t_texture		*texture;
 }					t_data;
+
+// typedef struct s_ray 
+// {
+// 	int x;
+// 	int y;
+// } t_ray;
 
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

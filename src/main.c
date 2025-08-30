@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 20:36:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/29 15:16:30 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,5 +132,5 @@ int	main(int ac, char **av)
 	mlx_hook(data->win, 17, 1L<<0, clean_exit, data);
 	mlx_hook(data->win, 2, 1L<<0, key_hooks, data);
 	mlx_loop(data->mlx);
-	return (0);	
+	return (0);
 }
