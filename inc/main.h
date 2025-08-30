@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/30 15:37:54 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/30 15:50:48 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <fcntl.h>
-// # include "/home/yabarhda/Documents/mlx/mlx.h"
-# include "/home/jait-chd/Documents/mlx/mlx.h"
+# include "/home/yabarhda/Documents/mlx/mlx.h"
+// # include "/home/jait-chd/Documents/mlx/mlx.h"
 
 # define KEY_W 119
 # define KEY_A 97
@@ -27,8 +27,6 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
-
-
 
 typedef struct s_mem
 {
