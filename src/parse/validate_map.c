@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 16:50:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/01 10:23:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 10:46:43 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	standard_check(t_data *data)
 static void	dfs(t_data *data, char **map, int x, int y)
 {
 	if (x == 0 || y == 0 || y == data->map->size - 1 \
-		|| x == (int)ft_strlen(map[y] - 1))
+		|| x == (int)ft_strlen(map[y]) - 1)
 	{
 		if (map[y][x] != '1')
 			(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
@@ -81,8 +81,29 @@ static void	deep_check(t_data *data)
 	dfs(data, map, data->player.x, data->player.y);
 }
 
+static void	get_map_size(t_data *data)
+{
+	t_map	*tmp;
+	int		size;
+
+	tmp = data->map;
+	size = 0;
+	while (tmp)
+	{
+		size++;
+		tmp = tmp->next;
+	}
+	tmp = data->map;
+	while (tmp)
+	{
+		tmp->size = size;
+		tmp = tmp->next;
+	}
+}
+
 void	validate_map(t_data *data)
 {
+	get_map_size(data);
 	standard_check(data);
 	deep_check(data);
 }

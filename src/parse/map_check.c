@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:21:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/31 21:11:24 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 10:43:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	add_node(t_map **map, t_map *new)
 {
-	static int	size;
 	t_map		*temp;
 
-	size++;
 	if (!*map)
 	{
 		*map = new;
@@ -25,10 +23,7 @@ void	add_node(t_map **map, t_map *new)
 	}
 	temp = *map;
 	while (temp->next)
-	{
-		temp->size = size;
 		temp = temp->next;
-	}
 	temp->next = new;
 }
 
