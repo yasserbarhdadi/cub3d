@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/06 10:14:06 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 18:33:28 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:00:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	*ft_malloc(long size)
 	static t_mem *(head), *(tail);
 	t_mem *(new);
 	void *(ptr);
-	if (size == -1337)
+	if (size == -42)
 		return (free_all(head), NULL);
 	ptr = malloc(size);
 	if (!ptr)

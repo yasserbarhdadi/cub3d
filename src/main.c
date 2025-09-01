@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/30 15:36:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/08/31 19:00:21 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static void	init_data(t_data *data)
 	data->texture->east = NULL;
 	data->texture->floor = NULL;
 	data->texture->ceiling = NULL;
+	data->player.x = 0;
+	data->player.y = 0;
+	data->player.angle = 0;
+	data->player.direction = 0;
 }
 
 int	clean_exit(t_data *data)
@@ -46,7 +50,7 @@ int	clean_exit(t_data *data)
 	mlx_destroy_window(data->mlx, data->win);
 	mlx_destroy_display(data->mlx);
 	free(data->mlx);
-	ft_malloc(-1337);
+	ft_malloc(-42);
 	exit(0);
 }
 
@@ -78,7 +82,7 @@ int	main(int ac, char **av)
 	data = ft_malloc(sizeof(t_data));
 	init_data(data);
 	if (!parse_file(data, av[1]))
-		return (ft_malloc(-1337), 1);
+		return (ft_malloc(-42), 1);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);

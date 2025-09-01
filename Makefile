@@ -1,13 +1,14 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 MLX = -L/home/$(USER)/Documents/mlx -lmlx -lXext -lX11
 
 UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c \
 		get_next_line.c ft_strlen.c ft_strlcat.c ft_strlcpy.c ft_split.c ft_isspace.c \
-		ft_strncmp.c ft_atoi.c ft_perror.c)
+		ft_strncmp.c ft_atoi.c ft_perror.c ft_strchr.c ft_isdigit.c ft_isplayer.c)
 
-PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c)
+PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c \
+		validate_map.c)
 
 SRC = src/main.c $(UTILS) $(PARSE)
 
