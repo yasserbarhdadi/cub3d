@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/31 23:43:40 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:05:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_data
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_isspace(int c);
-int		parse_file(t_data *data, char *file);
+void	parse_file(t_data *data, char *file);
 int		valid_map_char(char c);
 int		ft_isdigit(int c);
 int		ft_isplayer(char c);

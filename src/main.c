@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/31 19:00:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 11:40:37 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,23 +54,67 @@ int	clean_exit(t_data *data)
 	exit(0);
 }
 
+void	draw_circle(t_data *data, int x, int y)
+{
+	float radius = 20;
+	mlx_clear_window(data->mlx, data->win);
+	for (int i = 0; i < 100; i++)
+	{
+		for (int j = 0; j < 100; j++)
+		{
+			if ((i-50)*(i-50) + (j-50)*(j-50) <= radius*radius)
+				mlx_pixel_put(data->mlx, data->win, x + j, y + i, 0x00FFFFFF);
+		}
+	}
+}
+
 int	key_hooks(int key, t_data *data)
 {
+	int x = data->player.x;
+	int y = data->player.y;
 	if (key == KEY_ESC)
 		clean_exit(data);
 	if (key == KEY_RIGHT)
-		printf("right arrow\n");
+		data->player.angle += 1.25;
 	if (key == KEY_LEFT)
-		printf("left arrow\n");
+		data->player.angle -= 1.25;
 	if (key == KEY_W)
-		printf("w key\n");
+	{
+		data->player.y -= 3;
+		y = data->player.y + 720 / 2;
+		draw_circle(data, x, y);
+	}
 	if (key == KEY_A)
-		printf("a key\n");
+	{
+		data->player.x -= 3;
+		x = data->player.x + 1280 / 2;
+		draw_circle(data, x, y);
+	}
 	if (key == KEY_S)
-		printf("s key\n");
+	{
+		data->player.y += 3;
+		y = data->player.y + 720 / 2;
+		draw_circle(data, x, y);
+	}
 	if (key == KEY_D)
-		printf("d key\n");
+	{
+		data->player.x += 3;
+		x = data->player.x + 1280 / 2;
+		draw_circle(data, x, y);
+	}
 	return (0);
+}
+
+void	init_player(t_data *data)
+{
+	if (data->player.direction == 'N')
+		data->player.angle = 0;
+	else if (data->player.direction == 'E')
+		data->player.angle = 90;
+	else if (data->player.direction == 'S')
+		data->player.angle = 180;
+	else if (data->player.direction == 'W')
+		data->player.angle = 270;
 }
 
 int	main(int ac, char **av)
@@ -81,10 +125,11 @@ int	main(int ac, char **av)
 		return (1);
 	data = ft_malloc(sizeof(t_data));
 	init_data(data);
-	if (!parse_file(data, av[1]))
-		return (ft_malloc(-42), 1);
+	parse_file(data, av[1]);
+	init_player(data);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
+	draw_circle(data, data->player.x + 1280 / 2, data->player.y + 720 / 2);
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
 	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
 	mlx_loop(data->mlx);
