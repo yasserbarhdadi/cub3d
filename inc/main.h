@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/01 11:05:20 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:49:27 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdbool.h>
-# include "/home/yabarhda/Documents/mlx/mlx.h"
+// # include "/home/yabarhda/Documents/mlx/mlx.h"
+# include "/home/jait-chd/Documents/mlx/mlx.h"
+
+#define WIDTH 1280
+#define HEIGHT 720
 
 # define KEY_W 119
 # define KEY_A 97
@@ -27,7 +31,7 @@
 # define KEY_ESC 65307
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
-
+#define PI 3.14159265359
 typedef struct s_map t_map;
 
 typedef struct s_mem
@@ -38,10 +42,10 @@ typedef struct s_mem
 
 typedef struct s_texture
 {
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
+	void			*north;
+	void			*south;
+	void			*west;
+	void			*east;
 	unsigned char	*floor;
 	unsigned char	*ceiling;
 }					t_texture;
@@ -65,6 +69,12 @@ typedef struct s_data
 {
 	void			*mlx;
 	void			*win;
+	void 			*img;
+	int 			bpp;
+	int 			size_line;
+	int 			endien;
+	int 			width;
+	int 			height;
 	t_map			*map;
 	t_texture		*texture;
 	t_player		player;

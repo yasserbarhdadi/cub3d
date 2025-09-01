@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/01 11:40:37 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/01 15:29:26 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ static void	init_data(t_data *data)
 {
 	data->mlx = NULL;
 	data->map = NULL;
+	data->img = NULL;
+	data->size_line = 0;
+	data->bpp = 0;
+	data->endien = 0;
+	data->width = 0;
+	data->height = 0;
 	data->texture = ft_malloc(sizeof(t_texture));
 	data->texture->north = NULL;
 	data->texture->south = NULL;
@@ -129,6 +135,7 @@ int	main(int ac, char **av)
 	init_player(data);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
+	// mlx_get_data_addr(data->img , data->bpp , data->size_line , data->endien);
 	draw_circle(data, data->player.x + 1280 / 2, data->player.y + 720 / 2);
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
 	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
