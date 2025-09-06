@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/05 21:18:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/06 13:35:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	init_data(t_data *data)
 	data->img = NULL;
 	data->data = NULL;
 	data->map = NULL;
+	data->grid = NULL;
 	data->texture = ft_malloc(sizeof(t_texture));
 	data->texture->north = NULL;
 	data->texture->south = NULL;

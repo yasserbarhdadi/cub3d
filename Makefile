@@ -1,7 +1,7 @@
 NAME = cub3D
 CC = cc
-CFLAGS = #-Wall -Wextra -Werror -g
-MLX = -L/home/$(USER)/Documents/mlx -lmlx -lXext -lX11
+CFLAGS = -Wall -Wextra -Werror
+MLX = -L/home/$(USER)/Documents/mlx -lmlx -lXext -lX11 -lm
 
 UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c \
 		get_next_line.c ft_strlen.c ft_strlcat.c ft_strlcpy.c ft_split.c ft_isspace.c \

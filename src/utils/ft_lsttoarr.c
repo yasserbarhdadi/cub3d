@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 21:09:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/05 21:14:50 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/06 13:37:29 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	**ft_lsttoarr(void *lst)
 	arr = ft_malloc((i + 1) * sizeof(char *));
 	arr[i] = NULL;
 	tmp = (t_map *)lst;
+	i = 0;
 	while (tmp)
 	{
 		arr[i++] = tmp->row;

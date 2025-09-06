@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/06 10:16:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/06 14:14:20 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdbool.h>
+# include <math.h>
 # include "/home/yabarhda/Documents/mlx/mlx.h"
 
 # define KEY_W 119
@@ -79,6 +80,7 @@ typedef struct s_data
 	void			*win;
 	void			*img;
 	char			*data;
+	char			**grid;
 	t_map			*map;
 	t_texture		*texture;
 	t_player		player;
