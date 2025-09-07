@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/05 17:54:52 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/06 14:39:45 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/07 11:54:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	key_release(int key, t_data *data)
 
 static void put_pixel(t_data *data, int x, int y, int color)
 {
-	if (x >= WIDTH || x < 0 || y > HEIGHT || y < 0)
+	if (x >= WIDTH || x < 0 || y >= HEIGHT || y < 0)
 		return ;
 	int offset = (y * data->size_line) + (x * 4);
 	data->data[offset] = (color >> 24) & 0xFF; // blue
@@ -75,26 +75,26 @@ static void put_pixel(t_data *data, int x, int y, int color)
 
 static void draw_box(t_data *data, int x, int y, int color, int size)
 {
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i <= size; i++)
 		put_pixel(data, x + i, y, color);
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i <= size; i++)
 		put_pixel(data, x, y + i, color);
 	for (int i = 0; i <= size; i++)
 		put_pixel(data, x + i, y + size, color);
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i <= size; i++)
 		put_pixel(data, x + size, y + i, color);
 }
 
 static void move_player(t_data *data)
 {
-	float speed = 1;
+	// float speed = 1.25;
 	float rot_speed = 0.03;
 
 	if (data->player.angle > PI * 2)
 		data->player.angle = 0;
 	if (data->player.angle < 0)
 		data->player.angle = PI * 2;
-	
+
 	float cos_angle = cos(data->player.angle);
 	float sin_angle = sin(data->player.angle);
 	
@@ -105,15 +105,19 @@ static void move_player(t_data *data)
 	}
 	if (data->player.key_a)
 	{
-		data->player.x += cos_angle + (PI / 2);
-		data->player.y += sin_angle + (PI / 2);		
+		data->player.x += cos(data->player.angle + (3 * PI) / 2);
+		data->player.y += sin(data->player.angle + (3 * PI) / 2);
 	}
 	if (data->player.key_s)
 	{
 		data->player.x -= cos_angle;
 		data->player.y -= sin_angle;
 	}
-	if (data->player.key_d) data->player.x += speed;
+	if (data->player.key_d)
+	{
+		data->player.x -= cos(data->player.angle + (3 * PI) / 2);
+		data->player.y -= sin(data->player.angle + (3 * PI) / 2);
+	}
 	if (data->player.key_right) data->player.angle += rot_speed;
 	if (data->player.key_left) data->player.angle -= rot_speed;
 }
@@ -135,29 +139,57 @@ static void	draw_map(t_data *data, int color)
 		for (int x = 0; data->grid[y][x]; x++)
 		{
 			if (data->grid[y][x] == '1')
-			{
-				draw_box(data, x_axis, y_axis, color, 32);
-			}
-			x_axis+=32;
+				draw_box(data, x_axis, y_axis, color, BLOCK);
+			x_axis += BLOCK;
 		}
-		y_axis+=32;
+		y_axis += BLOCK;
 	}
+}
+
+static int touch(t_data *data, float x, float y)
+{
+	int grid_x = (int)x / BLOCK;
+	int grid_y = (int)y / BLOCK;
+	if (grid_y < 0 || grid_y >= data->map->size)
+		return (1);
+	if (grid_x < 0 || grid_x >= (int)ft_strlen(data->grid[grid_y]))
+		return (1);
+	if (data->grid[grid_y][grid_x] == '1')
+		return (1);
+	return (0);
+}
+
+static int get_ray_len(t_data *data, float cos_angle, float sin_angle)
+{
+	int i = 0;
+	while (!touch(data, data->player.x + 8 + (cos_angle * i), data->player.y + 8 + (sin_angle * i)))
+		i++;
+	return (i);	
 }
 
 static void	draw_line(t_data *data)
 {
-	int line_len = 30;
-	float cos_angle = cos(data->player.angle);
-	float sin_angle = sin(data->player.angle);
-	for (int i = 0; i < line_len; i++)
+	int fov = WIDTH * 1.25;
+	float angle = data->player.angle;
+	for (int j = 0; j < fov; j++)
 	{
-		put_pixel(data, data->player.x + 8 + (cos_angle * i), data->player.y + 8 + (sin_angle * i), decode_rgb(255, 0, 0));
+		float cos_angle = cos(angle + (7 * PI / 4));
+		float sin_angle = sin(angle + (7 * PI / 4));
+		int ray_len = get_ray_len(data, cos_angle, sin_angle);
+		angle += 0.001;
+		int screen_x = (j * WIDTH) / fov;
+		int line_height = (BLOCK * HEIGHT) / ray_len;
+		int start_y = (HEIGHT - line_height) / 2;
+		int end_y = start_y + line_height;
+		for (int y = start_y; y < end_y; y++)
+			put_pixel(data, screen_x, y, decode_rgb(200, 200, 200));
+			// put_pixel(data, data->player.x + 8 + (cos_angle * i), data->player.y + 8 + (sin_angle * i), decode_rgb(200, 200, 200));
 	}
 }
 
 static void draw_player(t_data *data)
 {
-	draw_box(data, data->player.x, data->player.y, player_color, 16);
+	// draw_box(data, data->player.x, data->player.y, player_color, 16);
 	draw_line(data);
 }
 
@@ -165,7 +197,7 @@ static int	on_game_update(t_data *data)
 {
 	clear_window(data);
 	move_player(data);
-	draw_map(data, map_color);
+	// draw_map(data, map_color);
 	draw_player(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);

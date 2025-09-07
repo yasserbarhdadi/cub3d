@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/06 14:14:20 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/07 09:29:35 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
-# define BLOCK 64
+# define BLOCK 32
 
 # define PI 3.14159265359
 
