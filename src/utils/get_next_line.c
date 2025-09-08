@@ -64,6 +64,7 @@ static int	extract_and_stash(int fd, char **stash, char *buffer)
 	{
 		temp = *stash;
 		*stash = ft_strjoin(*stash, buffer);
+		free(temp);
 	}
 	return (size);
 }

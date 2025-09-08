@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/02 13:30:03 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/09/08 19:54:54 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,15 @@ static void	init_data(t_data *data)
 	data->mlx = NULL;
 	data->map = NULL;
 	data->img = NULL;
+	data->img_addr = NULL;
 	data->size_line = 0;
 	data->bpp = 0;
 	data->endien = 0;
-	data->width = 0;
-	data->height = 0;
+	data->width = WIDTH;
+	data->height = HEIGHT;
+	data->map_array = NULL;
+	data->map_width = 0;
+	data->map_height = 0;
 	data->texture = ft_malloc(sizeof(t_texture));
 	data->texture->north = NULL;
 	data->texture->south = NULL;
@@ -49,65 +53,42 @@ static void	init_data(t_data *data)
 	data->player.y = 0;
 	data->player.angle = 0;
 	data->player.direction = 0;
+	data->player.dir_x = 0;
+	data->player.dir_y = 0;
+	data->player.plane_x = 0;
+	data->player.plane_y = 0;
 }
 
 int	clean_exit(t_data *data)
 {
-	mlx_destroy_window(data->mlx, data->win);
-	mlx_destroy_display(data->mlx);
-	free(data->mlx);
+	if (data->img)
+		mlx_destroy_image(data->mlx, data->img);
+	if (data->win)
+		mlx_destroy_window(data->mlx, data->win);
+	if (data->mlx)
+	{
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+	}
 	ft_malloc(-42);
 	exit(0);
 }
 
-void	draw_circle(t_data *data, int x, int y)
+int	render(t_data *data)
 {
-	float radius = 20;
-	mlx_clear_window(data->mlx, data->win);
-	for (int i = 0; i < 100; i++)
-	{
-		for (int j = 0; j < 100; j++)
-		{
-			if ((i-50)*(i-50) + (j-50)*(j-50) <= radius*radius)
-				mlx_pixel_put(data->mlx, data->win, x + j, y + i, 0x00FFFFFF);
-		}
-	}
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img_addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endien);
+	raycast(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mlx_destroy_image(data->mlx, data->img);
+	return (0);
 }
 
 int	key_hooks(int key, t_data *data)
 {
-	int x = data->player.x;
-	int y = data->player.y;
 	if (key == KEY_ESC)
 		clean_exit(data);
-	if (key == KEY_RIGHT)
-		data->player.angle += 1.25;
-	if (key == KEY_LEFT)
-		data->player.angle -= 1.25;
-	if (key == KEY_W)
-	{
-		data->player.y -= 3;
-		y = data->player.y + 720 / 2;
-		draw_circle(data, x, y);
-	}
-	if (key == KEY_A)
-	{
-		data->player.x -= 3;
-		x = data->player.x + 1280 / 2;
-		draw_circle(data, x, y);
-	}
-	if (key == KEY_S)
-	{
-		data->player.y += 3;
-		y = data->player.y + 720 / 2;
-		draw_circle(data, x, y);
-	}
-	if (key == KEY_D)
-	{
-		data->player.x += 3;
-		x = data->player.x + 1280 / 2;
-		draw_circle(data, x, y);
-	}
+	handle_movement(data, key);
 	return (0);
 }
 
@@ -121,6 +102,7 @@ void	init_player(t_data *data)
 		data->player.angle = 180;
 	else if (data->player.direction == 'W')
 		data->player.angle = 270;
+	init_player_direction(data);
 }
 
 int	main(int ac, char **av)
@@ -133,12 +115,12 @@ int	main(int ac, char **av)
 	init_data(data);
 	parse_file(data, av[1]);
 	init_player(data);
+	convert_map_to_array(data);
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, 1280, 720, "cub3D");
-	// mlx_get_data_addr(data->img , data->bpp , data->size_line , data->endien);
-	draw_circle(data, data->player.x + 1280 / 2, data->player.y + 720 / 2);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
 	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
+	mlx_loop_hook(data->mlx, render, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
