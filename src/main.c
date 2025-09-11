@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/08 19:54:54 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:04:27 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,26 +61,18 @@ static void	init_data(t_data *data)
 
 int	clean_exit(t_data *data)
 {
-	if (data->img)
-		mlx_destroy_image(data->mlx, data->img);
-	if (data->win)
-		mlx_destroy_window(data->mlx, data->win);
-	if (data->mlx)
-	{
-		mlx_destroy_display(data->mlx);
-		free(data->mlx);
-	}
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_destroy_window(data->mlx, data->win);
+	mlx_destroy_display(data->mlx);
+	free(data->mlx);
 	ft_malloc(-42);
 	exit(0);
 }
 
 int	render(t_data *data)
 {
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
-	data->img_addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endien);
 	raycast(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	mlx_destroy_image(data->mlx, data->img);
 	return (0);
 }
 
@@ -118,6 +110,8 @@ int	main(int ac, char **av)
 	convert_map_to_array(data);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img_addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endien);
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
 	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
 	mlx_loop_hook(data->mlx, render, data);

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:14:20 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/28 18:33:28 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/11 17:00:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int	extract_and_stash(int fd, char **stash, char *buffer)
 	{
 		temp = *stash;
 		*stash = ft_strjoin(*stash, buffer);
-		free(temp);
 	}
 	return (size);
 }

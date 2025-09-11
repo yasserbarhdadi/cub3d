@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/08 20:02:39 by jait-chd         ###   ########.fr       */
+/*   Updated: 2025/09/11 16:54:44 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <fcntl.h>
 # include <stdbool.h>
 // # include "/home/crouns1/mlx/mlx.h"
-#include "../../mlx/mlx.h"
+#include "/home/yabarhda/Documents/mlx/mlx.h"
 #include <math.h>
 #define WIDTH 1280
 #define HEIGHT 720
