@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:18:58 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/08/31 19:00:21 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/14 10:37:04 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,13 @@ static void	assign_colors(char **arr, unsigned char **texture, int fd)
 void	check_element(t_data *data, char **arr, int fd)
 {
 	if (!ft_strcmp(arr[0], "NO"))
-		assign_texture(arr, &data->texture->north, fd);
+		assign_texture(arr, &data->texture->north->file, fd);
 	else if (!ft_strcmp(arr[0], "SO"))
-		assign_texture(arr, &data->texture->south, fd);
+		assign_texture(arr, &data->texture->south->file, fd);
 	else if (!ft_strcmp(arr[0], "WE"))
-		assign_texture(arr, &data->texture->west, fd);
+		assign_texture(arr, &data->texture->west->file, fd);
 	else if (!ft_strcmp(arr[0], "EA"))
-		assign_texture(arr, &data->texture->east, fd);
+		assign_texture(arr, &data->texture->east->file, fd);
 	else if (!ft_strcmp(arr[0], "F"))
 		assign_colors(arr, &data->texture->floor, fd);
 	else if (!ft_strcmp(arr[0], "C"))

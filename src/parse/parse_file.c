@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:17:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/01 11:05:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/14 10:40:59 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ static void	check_texture_file(t_data *data, int f)
 {
 	int	fd;
 
-	fd = open(data->texture->north, O_RDONLY);
+	fd = open(data->texture->north->file, O_RDONLY);
 	if (fd == -1)
 		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
 	close(fd);
-	fd = open(data->texture->west, O_RDONLY);
+	fd = open(data->texture->west->file, O_RDONLY);
 	if (fd == -1)
 		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
 	close(fd);
-	fd = open(data->texture->south, O_RDONLY);
+	fd = open(data->texture->south->file, O_RDONLY);
 	if (fd == -1)
 		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
 	close(fd);
-	fd = open(data->texture->east, O_RDONLY);
+	fd = open(data->texture->east->file, O_RDONLY);
 	if (fd == -1)
 		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
 	close(fd);
@@ -49,8 +49,9 @@ static void	check_texture_file(t_data *data, int f)
 
 static int	validate_elements(t_data *data)
 {
-	if (!data->texture->north || !data->texture->west || !data->texture->east \
-		|| !data->texture->south || !data->texture->floor \
+	if (!data->texture->north->file || !data->texture->west->file \
+		|| !data->texture->east->file \
+		|| !data->texture->south->file || !data->texture->floor \
 		|| !data->texture->ceiling)
 	{
 		return (0);

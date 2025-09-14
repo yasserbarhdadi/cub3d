@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/07 09:29:35 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/09/14 11:34:34 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
-# define BLOCK 32
+# define BLOCK 64
 
 # define PI 3.14159265359
 
@@ -43,12 +43,24 @@ typedef struct s_mem
 	struct s_mem	*next;
 }					t_mem;
 
+typedef struct s_img
+{
+	void			*img;
+	char			*pixels;
+	char			*file;
+	int				width;
+	int				height;
+	int				bpp;
+	int				size_line;
+	int				endian;
+}					t_img;
+
 typedef struct s_texture
 {
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
+	t_img			*north;
+	t_img			*south;
+	t_img			*west;
+	t_img			*east;
 	unsigned char	*floor;
 	unsigned char	*ceiling;
 }					t_texture;
@@ -78,15 +90,12 @@ typedef struct s_data
 {
 	void			*mlx;
 	void			*win;
-	void			*img;
 	char			*data;
 	char			**grid;
+	t_img			*img;
 	t_map			*map;
 	t_texture		*texture;
 	t_player		player;
-	int				bpp;
-	int				size_line;
-	int				endian;
 }					t_data;
 
 int		ft_strcmp(const char *s1, const char *s2);
