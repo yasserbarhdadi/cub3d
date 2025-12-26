@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/07 22:14:20 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/11 17:00:45 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 05:48:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static char	*extract_line(char **stash)
 static int	extract_and_stash(int fd, char **stash, char *buffer)
 {
 	int		size;
-	char	*temp;
 
 	size = read(fd, buffer, 1);
 	if (size < 0)
@@ -61,10 +60,7 @@ static int	extract_and_stash(int fd, char **stash, char *buffer)
 	if (!*stash)
 		*stash = ft_strdup(buffer);
 	else
-	{
-		temp = *stash;
 		*stash = ft_strjoin(*stash, buffer);
-	}
 	return (size);
 }
 
@@ -86,7 +82,7 @@ char	*get_next_line(int fd)
 		{
 			stash = NULL;
 			return (NULL);
-		}			
+		}
 	}
 	return (extract_line(&stash));
 }

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 16:50:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/11 17:00:04 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 05:48:17 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	standard_check(t_data *data)
 			if (ft_isplayer(tmp->row[x]))
 			{
 				if (data->player.x)
-					(ft_malloc(-42), ft_perror("Multiple players present in map"), exit(1));
+					(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
 				data->player.x = x;
 				data->player.y = y;
 				data->player.direction = tmp->row[x];
@@ -41,23 +41,33 @@ static void	standard_check(t_data *data)
 		(ft_malloc(-42), ft_perror("Player not found"), exit(1));
 }
 
-static void	dfs(t_data *data, char **map, int x, int y)
+static void	check_borders(char **m)
 {
-	if (x == 0 || y == 0 || y == data->map->size - 1 \
-		|| x == (int)ft_strlen(map[y]) - 1)
+	int (j), i = 0;
+	while (m[i])
 	{
-		if (map[y][x] != '1')
-			(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
+		j = 0;
+		while (m[i][j])
+		{
+			if (m[i][j] == '0')
+			{
+				if (!m[i][j + 1] || (m[i][j + 1] != '0'
+					&& m[i][j + 1] != '1'))
+					early_exit("Invalid map");
+				if (j == 0 || !m[i][j - 1]
+					|| (m[i][j - 1] != '0' && m[i][j - 1] != '1'))
+					early_exit("Invalid map");
+				if (!m[i + 1] || j >= (int)ft_strlen(m[i + 1]) || !m[i + 1][j]
+				|| (m[i + 1][j] != '0' && m[i + 1][j] != '1'))
+					early_exit("Invalid map");
+				if (i == 0 || j >= (int)ft_strlen(m[i - 1]) || !m[i - 1][j]
+				|| (m[i - 1][j] != '0' && m[i - 1][j] != '1'))
+					early_exit("Invalid map");
+			}
+			j++;
+		}
+		i++;
 	}
-	if (map[y][x] == '1' || map[y][x] == 'F')
-		return ;
-	if (!map[y][x])
-		(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
-	map[y][x] = 'F';
-	dfs(data, map, x + 1, y);
-	dfs(data, map, x - 1, y);
-	dfs(data, map, x, y + 1);
-	dfs(data, map, x, y - 1);
 }
 
 static void	deep_check(t_data *data)
@@ -78,7 +88,7 @@ static void	deep_check(t_data *data)
 		tmp = tmp->next;
 		i++;
 	}
-	dfs(data, map, data->player.x, data->player.y);
+	check_borders(map);
 }
 
 static void	get_map_size(t_data *data)

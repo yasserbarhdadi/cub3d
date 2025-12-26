@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:17:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/11 16:59:58 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 05:28:45 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,13 @@ static void	final_check(t_data *data, int fd)
 		close(fd);
 		exit(1);
 	}
+}
+
+void	early_exit(char *error)
+{
+	ft_malloc(-42);
+	ft_perror(error);
+	exit(1);
 }
 
 static void	check_texture_file(t_data *data, int f)

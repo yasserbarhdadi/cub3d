@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/11 17:04:27 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 04:51:19 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,10 @@ int	error_check(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nNo such file or directory\n"), 0);
+	close(fd);
 	len = ft_strlen(av[1]);
 	if (ft_strcmp(".cub", &av[1][len - 4]))
-		return (printf("Error\nInvalid file format\n"), close(fd), 0);
+		return (printf("Error\nInvalid file format\n"), 0);
 	return (1);
 }
 
@@ -71,7 +72,7 @@ int	clean_exit(t_data *data)
 
 int	render(t_data *data)
 {
-	raycast(data);
+	// raycast(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }
@@ -80,7 +81,7 @@ int	key_hooks(int key, t_data *data)
 {
 	if (key == KEY_ESC)
 		clean_exit(data);
-	handle_movement(data, key);
+	// handle_movement(data, key);
 	return (0);
 }
 
@@ -94,7 +95,7 @@ void	init_player(t_data *data)
 		data->player.angle = 180;
 	else if (data->player.direction == 'W')
 		data->player.angle = 270;
-	init_player_direction(data);
+	// init_player_direction(data);
 }
 
 int	main(int ac, char **av)
@@ -107,7 +108,7 @@ int	main(int ac, char **av)
 	init_data(data);
 	parse_file(data, av[1]);
 	init_player(data);
-	convert_map_to_array(data);
+	// convert_map_to_array(data);
 	data->mlx = mlx_init();
 	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "cub3D");
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
