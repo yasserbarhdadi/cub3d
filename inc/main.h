@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/26 05:40:10 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 06:46:38 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,12 @@ typedef struct s_player
 	float			y;
 	float			angle;
 	char			direction;
-	float			dir_x;
-	float			dir_y;
-	float			plane_x;
-	float			plane_y;
+	bool			key_w;
+	bool			key_a;
+	bool			key_s;
+	bool			key_d;
+	bool			key_right;
+	bool			key_left;
 }					t_player;
 
 typedef struct s_data

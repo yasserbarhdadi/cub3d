@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/26 04:51:19 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/26 06:57:15 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,12 @@ static void	init_data(t_data *data)
 	data->player.y = 0;
 	data->player.angle = 0;
 	data->player.direction = 0;
-	data->player.dir_x = 0;
-	data->player.dir_y = 0;
-	data->player.plane_x = 0;
-	data->player.plane_y = 0;
+	data->player.key_w = false;
+	data->player.key_a = false;
+	data->player.key_s = false;
+	data->player.key_d = false;
+	data->player.key_right = false;
+	data->player.key_left = false;
 }
 
 int	clean_exit(t_data *data)
@@ -70,32 +72,74 @@ int	clean_exit(t_data *data)
 	exit(0);
 }
 
-int	render(t_data *data)
-{
-	// raycast(data);
-	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
-	return (0);
-}
-
-int	key_hooks(int key, t_data *data)
-{
-	if (key == KEY_ESC)
-		clean_exit(data);
-	// handle_movement(data, key);
-	return (0);
-}
-
 void	init_player(t_data *data)
 {
 	if (data->player.direction == 'N')
-		data->player.angle = 0;
+		data->player.angle = 0.0;
 	else if (data->player.direction == 'E')
-		data->player.angle = 90;
+		data->player.angle = PI / 2.0;
 	else if (data->player.direction == 'S')
-		data->player.angle = 180;
+		data->player.angle = PI;
 	else if (data->player.direction == 'W')
-		data->player.angle = 270;
-	// init_player_direction(data);
+		data->player.angle = 3.0 * PI / 2.0;
+}
+
+int	on_keypress(int key, t_data *data)
+{
+	if (key == KEY_ESC)
+		clean_exit(data);
+	if (key == KEY_W)
+		data->player.key_w = true;
+	if (key == KEY_A)
+		data->player.key_a = true;
+	if (key == KEY_S)
+		data->player.key_s = true;
+	if (key == KEY_D)
+		data->player.key_d = true;
+	if (key == KEY_RIGHT)
+		data->player.key_right = true;
+	if (key == KEY_LEFT)
+		data->player.key_left = true;
+	return (0);
+}
+
+int	on_keyrelease(int key, t_data *data)
+{
+	if (key == KEY_W)
+		data->player.key_w = false;
+	if (key == KEY_A)
+		data->player.key_a = false;
+	if (key == KEY_S)
+		data->player.key_s = false;
+	if (key == KEY_D)
+		data->player.key_d = false;
+	if (key == KEY_RIGHT)
+		data->player.key_right = false;
+	if (key == KEY_LEFT)
+		data->player.key_left = false;	
+	return (0);
+}
+
+void	move_player(t_data *data)
+{
+	if (data->player.key_w)
+		printf("Key W is pressed\n");
+	if (data->player.key_a)
+		printf("Key A is pressed\n");
+	if (data->player.key_s)
+		printf("Key S is pressed\n");
+	if (data->player.key_d)
+		printf("Key D is pressed\n");
+	if (data->player.key_right)
+		printf("Key right is pressed\n");
+	if (data->player.key_left)
+		printf("Key left is pressed\n");
+}
+
+int	on_gameupdate(t_data *data)
+{
+	move_player(data);
+	return (0);
 }
 
 int	main(int ac, char **av)
@@ -114,8 +158,9 @@ int	main(int ac, char **av)
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->img_addr = mlx_get_data_addr(data->img, &data->bpp, &data->size_line, &data->endien);
 	mlx_hook(data->win, 17, 1L << 0, clean_exit, data);
-	mlx_hook(data->win, 2, 1L << 0, key_hooks, data);
-	mlx_loop_hook(data->mlx, render, data);
+	mlx_hook(data->win, 2, 1L << 0, on_keypress, data);
+	mlx_hook(data->win, 3, 1L << 1, on_keyrelease, data);
+	mlx_loop_hook(data->mlx, on_gameupdate, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
