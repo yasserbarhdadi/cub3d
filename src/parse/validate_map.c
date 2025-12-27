@@ -27,8 +27,8 @@ static void	standard_check(t_data *data)
 			{
 				if (data->player.x)
 					(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
-				data->player.x = x;
-				data->player.y = y;
+				data->player.x = x + 0.5;
+				data->player.y = y + 0.5;
 				data->player.direction = tmp->row[x];
 				tmp->row[x] = '0';
 			}

@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/26 06:46:38 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/27 14:32:01 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,10 @@ int		ft_isspace(int c);
 int		valid_map_char(char c);
 int		ft_isdigit(int c);
 int		ft_isplayer(char c);
+int		on_gameupdate(t_data *data);
+int		on_keypress(int key, t_data *data);
+int		on_keyrelease(int key, t_data *data);
+int		clean_exit(t_data *data);
 
 long	ft_atoi(const char *str);
 
@@ -114,6 +118,10 @@ void	map_check(t_data *data, int fd);
 void	validate_map(t_data *data);
 void	parse_file(t_data *data, char *file);
 void	early_exit(char *error);
+void	convert_map_to_array(t_data *data);
+void	move_player(t_data *data);
+void	put_pixel(t_data *data, int x, int y, int color);
+void	init_cub(t_data *data);
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);

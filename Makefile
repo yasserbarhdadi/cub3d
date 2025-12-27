@@ -10,9 +10,9 @@ UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c
 PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c \
 		validate_map.c)
 
-#RAYCAST = $(addprefix src/raycast/, switch_to_array.c raycast_drawing.c raycast_ray.c raycast_movement.c raycast_init.c perform_dda.c )
+RAYCAST = $(addprefix src/raycast/, game_loop.c init_cub.c player_movement.c put_pixel.c)
 
-SRC = src/main.c $(UTILS) $(PARSE) #$(RAYCAST)
+SRC = src/main.c $(UTILS) $(PARSE) $(RAYCAST)
 
 OBJ = $(SRC:%.c=%.o)
 

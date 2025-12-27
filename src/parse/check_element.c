@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:18:58 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/09/11 16:59:44 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/27 14:25:59 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,28 @@ void	check_element(t_data *data, char **arr, int fd)
 		assign_colors(arr, &data->texture->ceiling, fd);
 	else
 		(ft_malloc(-42), ft_perror("Invalid map"), close(fd), exit(1));
+}
+
+void	convert_map_to_array(t_data *data)
+{
+	t_map	*current;
+	int		i;
+
+	current = data->map;
+	while (current)
+	{
+		data->map_height++;
+		if (ft_strlen(current->row) > (size_t)data->map_width)
+			data->map_width = ft_strlen(current->row);
+		current = current->next;
+	}
+	data->map_array = ft_malloc(sizeof(char *) * (data->map_height + 1));
+	current = data->map;
+	i = 0;
+	while (current)
+	{
+		data->map_array[i++] = current->row;
+		current = current->next;
+	}
+	data->map_array[i] = NULL;
 }
