@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/27 14:31:14 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/28 23:34:57 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,13 @@ int	clean_exit(t_data *data)
 void	init_player(t_data *data)
 {
 	if (data->player.direction == 'N')
-		data->player.angle = 0.0;
-	else if (data->player.direction == 'E')
 		data->player.angle = PI / 2.0;
+	else if (data->player.direction == 'E')
+		data->player.angle = 0.0;
 	else if (data->player.direction == 'S')
-		data->player.angle = PI;
-	else if (data->player.direction == 'W')
 		data->player.angle = 3.0 * PI / 2.0;
+	else if (data->player.direction == 'W')
+		data->player.angle = PI;
 	data->player.key_w = false;
 	data->player.key_a = false;
 	data->player.key_s = false;

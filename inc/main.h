@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/27 14:32:01 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/27 16:13:36 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define KEY_RIGHT 65363
 
 # define PI 3.14159265359
+# define BLOCK 32
 
 typedef struct s_map	t_map;
 

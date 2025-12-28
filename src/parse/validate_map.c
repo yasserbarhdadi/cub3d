@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/31 16:50:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/26 05:48:17 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/27 16:22:17 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	standard_check(t_data *data)
 			{
 				if (data->player.x)
 					(ft_malloc(-42), ft_perror("Invalid map"), exit(1));
-				data->player.x = x + 0.5;
-				data->player.y = y + 0.5;
+				data->player.x = (x + 0.5) * BLOCK;
+				data->player.y = (y + 0.5) * BLOCK;
 				data->player.direction = tmp->row[x];
 				tmp->row[x] = '0';
 			}
