@@ -112,6 +112,3 @@ for (int i = 0; i < 20; i++) {
 - Cast coordinates to int if needed for pixel drawing.
 - The antenna always points in the direction the player is facing.
 - Uses trigonometry to convert angle and distance to (x, y).
-
-### Feedback
-Your implementation is correct! You used the right formula and approach. Just ensure you cast the coordinates to int if your pixel function requires integer values. This method is standard for directional line drawing in 2D graphics.
