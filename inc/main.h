@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/27 16:13:36 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/30 16:32:47 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 
 # define PI 3.14159265359
 # define BLOCK 32
+# define FOV 60
 
 typedef struct s_map	t_map;
 
@@ -42,6 +43,22 @@ typedef struct s_mem
 	void			*ptr;
 	struct s_mem	*next;
 }					t_mem;
+
+typedef struct s_ray
+{
+	int				map_x;
+	int				map_y;
+	int				step_x;
+	int				step_y;
+	int				side;
+	float			pos_x;
+	float			pos_y;
+	float			delta_x;
+	float			delta_y;
+	float			side_x;
+	float			side_y;
+	float			angle;
+}   t_ray;
 
 typedef struct s_texture
 {
@@ -88,6 +105,7 @@ typedef struct s_data
 	t_map			*map;
 	t_texture		*texture;
 	t_player		player;
+	t_ray			ray;
 	char			**map_array;
 	int				map_width;
 	int				map_height;
@@ -103,6 +121,7 @@ int		on_gameupdate(t_data *data);
 int		on_keypress(int key, t_data *data);
 int		on_keyrelease(int key, t_data *data);
 int		clean_exit(t_data *data);
+int		is_wall(t_data *data, float x, float y);
 
 long	ft_atoi(const char *str);
 
@@ -123,6 +142,9 @@ void	convert_map_to_array(t_data *data);
 void	move_player(t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
 void	init_cub(t_data *data);
+void	draw_rays(t_data *data);
+void	draw_floor_ceiling(t_data *data);
+void	clear_window(t_data *data);
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);

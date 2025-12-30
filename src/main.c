@@ -68,20 +68,20 @@ int	clean_exit(t_data *data)
 
 void	init_player(t_data *data)
 {
-	if (data->player.direction == 'N')
-		data->player.angle = PI / 2.0;
-	else if (data->player.direction == 'E')
-		data->player.angle = 0.0;
-	else if (data->player.direction == 'S')
-		data->player.angle = 3.0 * PI / 2.0;
-	else if (data->player.direction == 'W')
-		data->player.angle = PI;
 	data->player.key_w = false;
 	data->player.key_a = false;
 	data->player.key_s = false;
 	data->player.key_d = false;
 	data->player.key_right = false;
 	data->player.key_left = false;
+	if (data->player.direction == 'N')
+		data->player.angle = 3 * PI / 2;
+	else if (data->player.direction == 'S')
+		data->player.angle = PI / 2;
+	else if (data->player.direction == 'E')
+		data->player.angle = 0;
+	else if (data->player.direction == 'W')
+		data->player.angle = PI;
 }
 
 int	main(int ac, char **av)

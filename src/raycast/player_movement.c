@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:22:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/29 00:02:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/30 16:23:30 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,40 +48,49 @@ int	on_keyrelease(int key, t_data *data)
 	return (0);
 }
 
-void	move_player(t_data *data)
+static void	try_step(t_data *data, double angle, int dir)
 {
-	float movespeed = 0.5;
-	float rotation_speed = 0.025;
-	if (data->player.key_w && (data->player.y - movespeed) > 0)
+	float	new_x;
+	float	new_y;
+	float	cush_x;
+	float	cush_y;
+
+	new_x = data->player.x + (dir * 0.5 * cos(angle));
+	new_y = data->player.y + (dir * 0.5 * sin(angle));
+	cush_x = new_x + (dir * 7 * cos(angle));
+	cush_y = new_y + (dir * 7 * sin(angle));
+	if (!is_wall(data, cush_x, cush_y))
 	{
-		data->player.x = data->player.x + (movespeed * cos(data->player.angle));
-		data->player.y = data->player.y + (movespeed * sin(data->player.angle));
+		data->player.x = new_x;
+		data->player.y = new_y;
 	}
-	if (data->player.key_s && (data->player.y + movespeed + 7) < HEIGHT)
-	{
-		data->player.x = data->player.x - (movespeed * cos(data->player.angle));
-		data->player.y = data->player.y - (movespeed * sin(data->player.angle));
-	}
-	if (data->player.key_a && (data->player.x - movespeed) > 0)
-	{
-		data->player.x = data->player.x - (movespeed * cos(data->player.angle + (PI / 2)));
-		data->player.y = data->player.y - (movespeed * sin(data->player.angle + (PI / 2)));
-	}
-	if (data->player.key_d && (data->player.x + movespeed + 7) < WIDTH)
-	{
-		data->player.x = data->player.x + (movespeed * cos(data->player.angle + (PI / 2)));
-		data->player.y = data->player.y + (movespeed * sin(data->player.angle + (PI / 2)));
-	}
+}
+
+static void	rotate_player(t_data *data)
+{
 	if (data->player.key_left)
 	{
-		data->player.angle -= rotation_speed;
+		data->player.angle -= 0.025;
 		if (data->player.angle <= 0)
 			data->player.angle += 2 * PI;
 	}
 	if (data->player.key_right)
 	{
-		data->player.angle += rotation_speed;
+		data->player.angle += 0.025;
 		if (data->player.angle >= 2 * PI)
 			data->player.angle -= 2 * PI;
 	}
+}
+
+void	move_player(t_data *data)
+{
+	if (data->player.key_w)
+		try_step(data, data->player.angle, 1);
+	if (data->player.key_s)
+		try_step(data, data->player.angle, -1);
+	if (data->player.key_a)
+		try_step(data, data->player.angle + (PI / 2), -1);
+	if (data->player.key_d)
+		try_step(data, data->player.angle + (PI / 2), 1);
+	rotate_player(data);
 }

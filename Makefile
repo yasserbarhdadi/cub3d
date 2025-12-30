@@ -1,6 +1,6 @@
 NAME = cub3D
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -g #-Wall -Wextra -Werror
 MLX = -lmlx -lXext -lX11 -lm
 
 UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c \
@@ -10,7 +10,10 @@ UTILS = $(addprefix src/utils/, ft_malloc.c ft_strcmp.c ft_strjoin.c ft_strdup.c
 PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c \
 		validate_map.c)
 
-RAYCAST = $(addprefix src/raycast/, game_loop.c init_cub.c player_movement.c put_pixel.c)
+RAYCAST = $(addprefix src/raycast/, game_loop.c init_cub.c player_movement.c put_pixel.c \
+		raycast.c draw_secondaries.c)
+
+HEADER = inc/main.h
 
 SRC = src/main.c $(UTILS) $(PARSE) $(RAYCAST)
 
@@ -21,7 +24,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(CC) $(OBJ) $(MLX) -o $(NAME)
 
-%.o: %.c
+%.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:

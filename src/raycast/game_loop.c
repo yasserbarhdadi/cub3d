@@ -6,28 +6,11 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:23:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/28 23:54:02 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/30 16:56:05 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/main.h"
-
-static void	clear_window(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (i < (HEIGHT * data->size_line))
-		data->img_addr[i++] = 0;
-}
-
-void draw_antena(t_data *data)
-{
-	for (int i = 0; i < 20; i++)
-	{
-		put_pixel(data, (int)(data->player.x + (i * cos(data->player.angle))), (int)(data->player.y + (i * sin(data->player.angle))), 0xFFFF0000);
-	}
-}
 
 static void	draw_player(t_data *data)
 {
@@ -37,7 +20,7 @@ static void	draw_player(t_data *data)
 		for (int j = 0; j < playersize; j++)
 			put_pixel(data, data->player.x + i, data->player.y + j, 123445);
 	}
-	draw_antena(data);
+	draw_rays(data);
 }
 
 void draw_box(t_data *data, int x, int y)
@@ -81,8 +64,10 @@ int	on_gameupdate(t_data *data)
 {
 	clear_window(data);
 	move_player(data);
-	draw_map(data);
-	draw_player(data);
+	draw_floor_ceiling(data);
+	// draw_map(data);
+	// draw_player(data);
+	draw_rays(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	return (0);
 }
