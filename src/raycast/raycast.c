@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/30 16:09:24 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/30 16:25:49 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/30 17:15:39 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,20 @@ static void	dda(t_data *data)
 	}
 }
 
-static void draw_wall(t_data *data, int x)
+static void	draw_wall(t_data *data, int x, int y)
 {
 	float	distance;
 	float	perp_dis;
 	float	wall_height;
 	float	start;
 	float	end;
-	int		y;
 
 	if (data->ray.side == 0)
 		distance = data->ray.side_x - data->ray.delta_x;
 	else
 		distance = data->ray.side_y - data->ray.delta_y;
 	perp_dis = distance * cos(data->ray.angle - data->player.angle);
-	wall_height = HEIGHT / perp_dis; //(BLOCK / perp_dis) * (WIDTH / 2) / tan(FOV / 2); // HEIGHT / perp_dis
-
+	wall_height = HEIGHT / perp_dis;
 	start = -wall_height / 2 + HEIGHT / 2;
 	if (start < 0)
 		start = 0;
@@ -97,27 +95,6 @@ static void draw_wall(t_data *data, int x)
 	{
 		put_pixel(data, x, y, 0xFFFF0000);
 		y++;
-	}	
-}
-
-static void	draw_ray_line(t_data *data)
-{
-	float	distance;
-	int		i;
-	int		px;
-	int		py;
-
-	if (data->ray.side == 0)
-		distance = data->ray.side_x - data->ray.delta_x;
-	else
-		distance = data->ray.side_y - data->ray.delta_y;
-	i = 0;
-	while (i < distance * BLOCK)
-	{
-		px = (int)(data->player.x + (i * cos(data->ray.angle)));
-		py = (int)(data->player.y + (i * sin(data->ray.angle)));
-		put_pixel(data, px, py, 0xFFFF0000);
-		i++;
 	}
 }
 
@@ -125,19 +102,20 @@ void	draw_rays(t_data *data)
 {
 	float	step;
 	float	offset;
-	int		j;
+	int		x;
+	int		y;
 
 	offset = (FOV / 2) * (PI / 180);
 	data->ray.angle = data->player.angle - offset;
 	step = (FOV * (PI / 180)) / WIDTH;
-	j = 0;
-	while (j < WIDTH)
+	x = 0;
+	y = 0;
+	while (x < WIDTH)
 	{
 		init_ray_step(data);
 		dda(data);
-		// draw_ray_line(data);
-		draw_wall(data, j);
+		draw_wall(data, x, y);
 		data->ray.angle += step;
-		j++;
+		x++;
 	}
 }

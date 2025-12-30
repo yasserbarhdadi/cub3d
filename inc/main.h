@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/30 16:32:47 by yabarhda         ###   ########.fr       */
+/*   Updated: 2025/12/30 17:14:16 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ typedef struct s_ray
 	float			side_x;
 	float			side_y;
 	float			angle;
-}   t_ray;
+}					t_ray;
 
 typedef struct s_texture
 {
