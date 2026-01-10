@@ -27,6 +27,109 @@ A minimal Wolfenstein-style renderer written with MiniLibX. This document explai
   - Map grid of `1` (wall), `0` (space), single player start `N/S/E/W`
 - **Texture validation** happens during parsing: ensures `.xpm` extension, file exists, and is non-empty before loading via MLX.
 
+### Parsing (.cub) — Detailed
+
+Parsing lives in `src/parse/` and is designed to fail fast (prints an error via `ft_perror`, triggers `ft_malloc(-42)` cleanup, then `exit(1)`).
+
+**High-level flow**
+1) `parse_file(data, path)` (`src/parse/parse_file.c`)
+   - Opens the file (`open(path, O_RDONLY)`), then runs the three phases below.
+2) Elements phase: `parse_elements()` + `require_elements()` (`src/parse/parse_elements.c`)
+   - Reads lines until all 6 elements are set: `NO/SO/WE/EA/F/C`.
+3) Texture file checks: `check_texture_files()` (`src/parse/parse_texture_check.c`)
+   - Validates the 4 texture paths (extension/existence/readability).
+4) Map phase: `map_check()` (`src/parse/map_check.c`)
+   - Reads the grid into a linked list (`t_map`) and then validates it (`validate_map`).
+
+**File responsibilities (parse folder)**
+- `parse_file.c`: orchestration only.
+- `parse_elements.c`: reads the header part (textures + colors) until complete.
+- `check_element.c`: dispatches a line to texture or color assignment.
+- `element_texture.c`: parses and stores one texture path.
+- `element_color_utils.c`: string helpers for color parsing.
+- `valid_color_format.c`: validates the raw `r,g,b` formatting (digits/commas/spaces).
+- `element_color.c`: parses `F`/`C` into 3 bytes (0–255 each).
+- `parse_texture_check.c`: validates that the texture files are usable.
+- `map_check.c`: reads the map grid, validates characters, and enforces “no content after map gap”.
+- `map_nodes.c`: linked-list helpers (`add_node`, `new_node`).
+- `validate_map.c`: runs the three validation steps.
+- `validate_size.c`: computes the linked list size and stores it in each node.
+- `validate_player.c`: finds exactly one `N/S/E/W`, sets player position/direction, replaces it with `'0'`.
+- `validate_deep.c`: duplicates the map and calls border checks.
+- `validate_borders.c`: verifies enclosure rules for walkable cells.
+- `convert_map_to_array.c`: converts the linked list to `data->map_array` and computes `map_width/map_height` (used later by the engine).
+- `utils.c`: shared parse helpers like `valid_map_char()` / `only_spaces()`.
+
+## What is accepted and what is rejected
+
+### 1) Elements parsing (NO/SO/WE/EA/F/C)
+
+**Accepted**
+- Empty/whitespace-only lines are skipped.
+- Elements can appear in any order.
+- Texture path can end with `\n` (it will be duplicated without the newline).
+- Color values allow spaces around digits/commas as long as the overall format remains valid.
+
+**Rejected (error cases)**
+- Empty file: first `get_next_line(fd)` returns `NULL` → `"Empty file"`.
+- Unknown identifier (not `NO/SO/WE/EA/F/C`) → `"Invalid map"`.
+- Duplicate texture definition (`NO/SO/WE/EA` repeated) → `"Multiple definitions of textures"`.
+- Duplicate color definition (`F` or `C` repeated) → `"Multiple definitions of floor colors"` (same message for both).
+- Texture line with missing path (no `arr[1]`) → `"Invalid map"`.
+- Texture line with extra non-newline tokens (`arr[2]` that is not just `\n`) → `"Invalid map"`.
+- Color line with missing payload (no `arr[1]`) → `"Invalid map"`.
+- Color formatting invalid (not exactly 2 commas, bad characters, starts/ends with comma) → `"Invalid map"`.
+- Color split does not produce exactly 3 parts (more/less than 3) → `"Invalid map"`.
+- Any color channel is not purely numeric (except trailing `\n`) → `"Invalid map"`.
+- Any channel value out of range `[0..255]` → `"Invalid map"`.
+- After the elements loop ends, if any of the 6 required values is missing → `"Invalid map"`.
+
+### 2) Texture file validation
+`check_texture_files()` validates each of `NO/WE/SO/EA`:
+- Path must end with `.xpm` (minimum length 5) → otherwise `"Invalid texture file"`.
+- File must open and be readable (a `read(fd, buf, 1)` must succeed) → otherwise `"Invalid texture file"`.
+
+### 3) Map reading + character validation
+
+**Accepted**
+- Leading blank lines before the first map row are ignored.
+- Map rows may contain: `1`, `0`, exactly one of `N/S/E/W`, and whitespace.
+- Trailing blank lines after the map are allowed.
+
+**Rejected (error cases)**
+- Any non-whitespace character outside `01NSEW` → `"Invalid map"`.
+- If a blank/space-only line appears *inside* the map, then any later non-blank line is rejected.
+  - This prevents “two separated map blocks”.
+
+### 4) Map validation (size, player, borders)
+
+**Size (`get_map_size`)**
+- Counts linked-list rows and stores the same `size` in each node (`t_map.size`).
+
+**Player (`standard_check`)**
+- Finds the first and only `N/S/E/W`.
+- Sets:
+  - `data->player.x = (x + 0.5) * BLOCK`
+  - `data->player.y = (y + 0.5) * BLOCK`
+  - `data->player.direction = 'N'|'S'|'E'|'W'`
+- Replaces the map cell with `'0'` so walkable-area validation treats it as floor.
+
+Rejected:
+- More than one player start → `"Invalid map"`.
+- No player start → `"Player not found"`.
+
+**Border / enclosure (`deep_check` + `check_borders`)**
+- Duplicates each row (`ft_strdup`) into a temporary `char **map`.
+- For every `'0'` cell, checks its 4-neighbors exist and are either `'0'` or `'1'`.
+  - Right neighbor must exist and be `0/1`.
+  - Left neighbor must exist and be `0/1`.
+  - Down neighbor row must exist, column must be in-bounds, and be `0/1`.
+  - Up neighbor must exist, column must be in-bounds, and be `0/1`.
+
+Rejected:
+- Any `'0'` cell touching outside the map, a shorter row, or a non `0/1` cell (including spaces) → `"Invalid map"`.
+- Any copied row that becomes empty (`!map[i][0]`) → `"Invalid map"`.
+
 ### Input & Movement
 - Position updated by $x_{new} = x_{old} + v \cdot \cos(\theta)$, $y_{new} = y_{old} + v \cdot \sin(\theta)$
 - Strafing uses $\theta + \frac{\pi}{2}$.
