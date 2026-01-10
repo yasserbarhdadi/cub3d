@@ -6,7 +6,7 @@
 /*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2026/01/10 07:31:24 by jait-chd         ###   ########.fr       */
+/*   Updated: 2026/01/10 12:07:04 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,24 @@ void	validate_map(t_data *data);
 void	parse_file(t_data *data, char *file);
 void	early_exit(char *error);
 void	convert_map_to_array(t_data *data);
+
+void	assign_texture(char **arr, char **texture, int fd);
+void	assign_colors(char **arr, unsigned char **texture, int fd);
+int		is_space_only(char *s);
+char	*trim_spaces(char *s);
+char	*join_color_tokens(char **arr);
+int	only_spaces(char *line);
+void	parse_elements(t_data *data, int fd);
+void	require_elements(t_data *data, int fd);
+void	check_texture_files(t_data *data, int fd);
+
+void	add_node(t_map **map, t_map *new);
+t_map	*new_node(char *row);
+int	valid_color_format(char *s);
+void	get_map_size(t_data *data);
+void	standard_check(t_data *data);
+void	deep_check(t_data *data);
+void	check_borders(char **m);
 void	move_player(t_data *data);
 void	put_pixel(t_data *data, int x, int y, int color);
 void	init_cub(t_data *data);
