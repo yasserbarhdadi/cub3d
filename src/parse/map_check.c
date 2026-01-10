@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_check.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 15:21:32 by yabarhda          #+#    #+#             */
-/*   Updated: 2026/01/10 02:01:23 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/30 15:21:32 by jait-chd          #+#    #+#             */
+/*   Updated: 2026/01/10 07:45:13 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,41 @@ int	valid_map_char(char c)
 	return (0);
 }
 
+static int	only_spaces(char *line)
+{
+	int	i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != '\n' && !ft_isspace(line[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	map_check(t_data *data, int fd)
 {
 	int		i;
 	char	*line;
 
 	line = get_next_line(fd);
-	while (line && line[0] == '\n')
+	while (line && only_spaces(line))
 		line = get_next_line(fd);
 	while (line)
 	{
+		if (only_spaces(line))
+		{
+			line = get_next_line(fd);
+			while (line)
+			{
+				if (!only_spaces(line))
+					(ft_malloc(-42), close(fd), ft_perror("Invalid map"), exit(1));
+				line = get_next_line(fd);
+			}
+			break ;
+		}
 		i = 0;
 		while (line[i])
 		{

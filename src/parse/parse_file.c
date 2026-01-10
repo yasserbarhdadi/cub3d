@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/30 15:17:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2026/01/10 02:01:06 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/30 15:17:00 by jait-chd          #+#    #+#             */
+/*   Updated: 2026/01/10 07:45:13 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	parse_file(t_data *data, char *file)
 	while (line)
 	{
 		arr_line = ft_split(line, ' ');
-		if (arr_line[0][0] == '\n')
+		if (!arr_line[0] || arr_line[0][0] == '\0' || arr_line[0][0] == '\n')
 		{
 			line = get_next_line(fd);
 			continue ;

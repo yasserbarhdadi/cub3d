@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   validate_map.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: jait-chd <jait-chd@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/31 16:50:38 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/27 16:22:17 by yabarhda         ###   ########.fr       */
+/*   Created: 2025/08/31 16:50:38 by jait-chd          #+#    #+#             */
+/*   Updated: 2026/01/10 07:45:13 by jait-chd         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 static void	standard_check(t_data *data)
 {
-	int (x), y;
-	t_map *(tmp);
+	int		x;
+	int		y;
+	t_map	*tmp;
+
 	y = 0;
 	tmp = data->map;
 	while (tmp)
@@ -43,7 +45,10 @@ static void	standard_check(t_data *data)
 
 static void	check_borders(char **m)
 {
-	int (j), i = 0;
+	int	j;
+	int	i;
+
+	i = 0;
 	while (m[i])
 	{
 		j = 0;
