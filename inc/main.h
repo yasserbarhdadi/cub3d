@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 15:00:04 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/30 17:14:16 by yabarhda         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:07:47 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,9 @@
 # define PI 3.14159265359
 # define BLOCK 32
 # define FOV 60
+# define MOVE_SPEED 1
 
-typedef struct s_map	t_map;
+typedef struct s_map		t_map;
 
 typedef struct s_mem
 {
@@ -60,6 +61,17 @@ typedef struct s_ray
 	float			angle;
 }					t_ray;
 
+typedef struct s_img
+{
+	void			*ptr;
+	char			*addr;
+	int				bpp;
+	int				line_len;
+	int				endien;
+	int				width;
+	int				height;
+}					t_img;
+
 typedef struct s_texture
 {
 	char			*north;
@@ -68,6 +80,10 @@ typedef struct s_texture
 	char			*east;
 	unsigned char	*floor;
 	unsigned char	*ceiling;
+	t_img			north_tex;
+	t_img			south_tex;
+	t_img			west_tex;
+	t_img			east_tex;
 }					t_texture;
 
 typedef struct s_map
@@ -90,6 +106,19 @@ typedef struct s_player
 	bool			key_right;
 	bool			key_left;
 }					t_player;
+
+typedef struct s_draw
+{
+	t_img			*tex;
+	float			distance;
+	float			wall_h;
+	float			start;
+	float			end;
+	float			step;
+	float			tex_pos;
+	int				tex_x;
+	int				y;
+}					t_draw;
 
 typedef struct s_data
 {
@@ -145,6 +174,12 @@ void	init_cub(t_data *data);
 void	draw_rays(t_data *data);
 void	draw_floor_ceiling(t_data *data);
 void	clear_window(t_data *data);
+void	init_textures(t_data *data);
+t_img	*get_hit_texture(t_data *data);
+int		get_texture_color(t_img *tex, int x, int y);
+int		get_texture_x(t_data *data, t_img *tex, float distance);
+void	set_draw_limits(float wall_h, float *start, float *end);
+void	fill_draw_data(t_data *data, t_draw *draw);
 
 size_t	ft_strlen(const char *s);
 size_t	ft_strlcat(char *dest, const char *src, size_t size);

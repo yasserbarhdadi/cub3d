@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/30 15:17:00 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/26 05:28:45 by yabarhda         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:01:06 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,39 +19,33 @@ static void	final_check(t_data *data, int fd)
 		|| !data->texture->ceiling)
 	{
 		ft_malloc(-42);
-		ft_perror("Invalid texture file");
+		ft_perror("Invalid map");
 		close(fd);
 		exit(1);
 	}
 }
 
-void	early_exit(char *error)
+static void	check_one_texture(char *path, int f)
 {
-	ft_malloc(-42);
-	ft_perror(error);
-	exit(1);
+	char	buf[1];
+	int		len;
+	int		fd;
+
+	len = ft_strlen(path);
+	if (len < 5 || ft_strncmp(path + len - 4, ".xpm", 4))
+		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
+	fd = open(path, O_RDONLY);
+	if (fd < 0 || read(fd, buf, 1) <= 0)
+		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
+	close(fd);
 }
 
 static void	check_texture_file(t_data *data, int f)
 {
-	int	fd;
-
-	fd = open(data->texture->north, O_RDONLY);
-	if (fd == -1)
-		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
-	close(fd);
-	fd = open(data->texture->west, O_RDONLY);
-	if (fd == -1)
-		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
-	close(fd);
-	fd = open(data->texture->south, O_RDONLY);
-	if (fd == -1)
-		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
-	close(fd);
-	fd = open(data->texture->east, O_RDONLY);
-	if (fd == -1)
-		(ft_malloc(-42), ft_perror("Invalid texture file"), close(f), exit(1));
-	close(fd);
+	check_one_texture(data->texture->north, f);
+	check_one_texture(data->texture->west, f);
+	check_one_texture(data->texture->south, f);
+	check_one_texture(data->texture->east, f);
 }
 
 static int	validate_elements(t_data *data)

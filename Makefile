@@ -11,7 +11,7 @@ PARSE = $(addprefix src/parse/, check_element.c map_check.c parse_file.c \
 		validate_map.c)
 
 RAYCAST = $(addprefix src/raycast/, game_loop.c init_cub.c player_movement.c put_pixel.c \
-		raycast.c draw_secondaries.c)
+	raycast.c draw_secondaries.c texture_load.c texture_utils.c texture_draw.c)
 
 HEADER = inc/main.h
 

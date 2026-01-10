@@ -1,7 +1,7 @@
-NO ./Makefile
-SO ./Makefile
-WE ./Makefile
-EA ./Makefile
+NO ./assets/north.xpm
+SO ./assets/south.xpm
+WE ./assets/west.xpm
+EA ./assets/east.xpm
 
 F 100,97,97
 C 53,250,244

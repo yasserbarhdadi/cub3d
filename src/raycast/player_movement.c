@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/27 14:22:36 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/30 16:23:30 by yabarhda         ###   ########.fr       */
+/*   Updated: 2026/01/10 02:07:55 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ static void	try_step(t_data *data, double angle, int dir)
 	float	cush_x;
 	float	cush_y;
 
-	new_x = data->player.x + (dir * 0.5 * cos(angle));
-	new_y = data->player.y + (dir * 0.5 * sin(angle));
+	new_x = data->player.x + (dir * MOVE_SPEED * cos(angle));
+	new_y = data->player.y + (dir * MOVE_SPEED * sin(angle));
 	cush_x = new_x + (dir * 7 * cos(angle));
 	cush_y = new_y + (dir * 7 * sin(angle));
 	if (!is_wall(data, cush_x, cush_y))

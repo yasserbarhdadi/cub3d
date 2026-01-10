@@ -6,7 +6,7 @@
 /*   By: yabarhda <yabarhda@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/28 14:59:43 by yabarhda          #+#    #+#             */
-/*   Updated: 2025/12/28 23:34:57 by yabarhda         ###   ########.fr       */
+/*   Updated: 2026/01/03 09:01:02 by yabarhda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@ static int	error_check(int ac, char **av)
 
 	if (ac != 2)
 		return (printf("Error\nNot enough arguments\n"), 0);
+	len = ft_strlen(av[1]);
+	if (ft_strcmp(".cub", &av[1][len - 4]))
+		return (printf("Error\nInvalid file format\n"), 0);
 	fd = open(av[1], O_RDONLY);
 	if (fd == -1)
 		return (printf("Error\nNo such file or directory\n"), 0);
 	close(fd);
-	len = ft_strlen(av[1]);
-	if (ft_strcmp(".cub", &av[1][len - 4]))
-		return (printf("Error\nInvalid file format\n"), 0);
 	return (1);
 }
 
